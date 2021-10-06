@@ -6,6 +6,8 @@ import Gallery from './components/Gallery';
 import ContactForm from './components/Contact';
 
 function App() {
+  const [contactSelected, setContactSelected] = useState(false);
+
   const [categories] = useState([
     {
         name: 'commercial',
@@ -22,11 +24,22 @@ const [currentCategory, setCurrentCategory] = useState(categories[0]);
 
   return (
     <div> 
-    <Nav categories = {categories} setCurrentCategory = {setCurrentCategory} currentCategory = {currentCategory}></Nav>
+    <Nav 
+      categories = {categories} 
+      setCurrentCategory = {setCurrentCategory} 
+      currentCategory = {currentCategory}
+      contactSelected = {contactSelected} // This gets passed into the Nav component 
+      setContactSelected = {setContactSelected} // This gets passed into the Nav component 
+    ></Nav> 
       <main>
-        <ContactForm></ContactForm>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {!contactSelected ? ( // This block acts as an if else statement
+          <> {/* This is a react fragment, or <React.Fragment></React.Fragment> Use it to wrap everything and avoid creating extra divs */}
+            <Gallery currentCategory = {currentCategory}></Gallery>
+            <About></About>
+          </>
+        ) : ( // this is where the else starts
+          <ContactForm></ContactForm>
+        )}
       </main>
     </div>
   );
