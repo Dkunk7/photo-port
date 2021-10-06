@@ -108,13 +108,16 @@ const PhotoList = ({ category }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const toggleModal = (image, i) => {
-        setCurrentPhoto({...image, index: i})
-        setIsModalOpen(true);
+        setCurrentPhoto({...image, index: i});
+        setIsModalOpen(!isModalOpen);
     }
 
     return (
         <div>
-            {isModalOpen && <Modal currentPhoto = {currentPhoto}/>} {/* Modal opens if isModalOpen is true */}
+            {isModalOpen && <Modal currentPhoto = {currentPhoto} onClose = {toggleModal} />} {/* Modal opens if isModalOpen is true; toggleModal is passed as prop to Modal */}
+            {/* {isModalOpen && (
+                <Modal currentPhoto = {currentPhoto} onClose = {toggleModal}/>        <--- The above line could also be written like this
+            )} */}
             <div className = "flex-row">
                 {currentPhotos.map((image, i) => (
                     <img
